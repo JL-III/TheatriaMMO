@@ -4,23 +4,23 @@
     <artifactId>mcMMO</artifactId>
     <version>2.1.222</version>
     <name>mcMMO</name>
-    <url>https://github.com/mcMMO-Dev/mcMMO</url>
+    <url>https://github.com/JL-III/TheatriaMMO</url>
     <scm>
-        <url>https://github.com/mcMMO-Dev/mcMMO</url>
-        <connection>scm:git:git://github.com/mcMMO-Dev/mcMMO.git</connection>
-        <developerConnection>scm:git:git@github.com:mcMMO-Dev/mcMMO.git</developerConnection>
+        <url>https://github.com/JL-III/TheatriaMMO</url>
+        <connection>scm:git:git://github.com/JL-III/TheatriaMMO.git</connection>
+        <developerConnection>scm:git:git@github.com:JL-III/TheatriaMMO.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
-        <java.version>16</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
     </properties>
 
     <issueManagement>
-        <url>https://github.com/mcMMO-Dev/mcMMO/issues</url>
+        <url>https://github.com/JL-III/TheatriaMMO/issues</url>
         <system>GitHub</system>
     </issueManagement>
     <packaging>jar</packaging>
@@ -379,7 +379,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>32.0.0-jre</version> <!-- At this time Spigot is including 29.0 Guava classes that we are using -->
+            <version>32.1.1-jre</version> <!-- At this time Spigot is including 29.0 Guava classes that we are using -->
             <scope>compile</scope>
         </dependency>
     </dependencies>

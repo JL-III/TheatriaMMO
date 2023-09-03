@@ -19,6 +19,8 @@ import com.gmail.nossr50.util.skills.CombatUtils;
 import com.gmail.nossr50.util.skills.RankUtils;
 import com.gmail.nossr50.util.skills.SkillActivationType;
 import com.gmail.nossr50.util.skills.SkillUtils;
+import com.playtheatria.jliii.generalutils.items.TitanItem;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,6 +31,7 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -63,7 +66,23 @@ public class WoodcuttingManager extends SkillManager {
                 && ItemUtils.isAxe(heldItem);
     }
 
+    /**
+     * ATTENTION!
+     * Theatria Patch Begins
+     * Disable the ability to use tree feller on titan axes
+     *
+     * */
+
     public boolean canUseTreeFeller(ItemStack heldItem) {
+        //Fetch lore list response if there is lore check if it's a titan tool, if so, return false
+        Response<List<String>> loreListResponse = TitanItem.getLore(heldItem);
+        if (loreListResponse.isSuccess()) {
+            if (TitanItem.isTitanTool(loreListResponse.value())) {
+                Bukkit.getConsoleSender().sendMessage("Titan Item Detected, returning false");
+                return false;
+            }
+        }
+        //Theatria Patch Ends
         return mmoPlayer.getAbilityMode(SuperAbilityType.TREE_FELLER)
                 && ItemUtils.isAxe(heldItem);
     }
@@ -102,7 +121,6 @@ public class WoodcuttingManager extends SkillManager {
     public void processTreeFeller(BlockState blockState) {
         Player player = getPlayer();
         Set<BlockState> treeFellerBlocks = new HashSet<>();
-
         treeFellerReachedThreshold = false;
 
         processTree(blockState, treeFellerBlocks);

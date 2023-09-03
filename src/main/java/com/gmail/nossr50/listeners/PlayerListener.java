@@ -21,6 +21,7 @@ import com.gmail.nossr50.skills.repair.RepairManager;
 import com.gmail.nossr50.skills.salvage.Salvage;
 import com.gmail.nossr50.skills.salvage.SalvageManager;
 import com.gmail.nossr50.skills.taming.TamingManager;
+import com.gmail.nossr50.tItanEnchants.ItemInfo;
 import com.gmail.nossr50.util.*;
 import com.gmail.nossr50.util.player.UserManager;
 import com.gmail.nossr50.util.scoreboards.ScoreboardManager;
@@ -51,6 +52,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.Locale;
 
 public class PlayerListener implements Listener {
@@ -810,6 +812,12 @@ public class PlayerListener implements Listener {
             }
         }
 
+        if (player.getInventory().getItemInMainHand().getType() != Material.AIR && player.getInventory().getItemInMainHand().getItemMeta() != null) {
+            if (ItemInfo.isTitanTool(player.getInventory().getItemInMainHand())) {
+                return;
+            }
+        }
+
         switch (event.getAction()) {
             case RIGHT_CLICK_BLOCK:
                 if(player.getInventory().getItemInOffHand().getType() != Material.AIR && !player.isInsideVehicle() && !player.isSneaking()) {
@@ -819,7 +827,6 @@ public class PlayerListener implements Listener {
                 //Hmm
                 if(event.getClickedBlock() == null)
                     return;
-
                 Block block = event.getClickedBlock();
                 BlockState blockState = block.getState();
 

@@ -677,6 +677,10 @@ public class GeneralConfig extends BukkitConfig {
         return config.getBoolean("Abilities.Activation.Only_Activate_When_Sneaking", false);
     }
 
+    public boolean getAbilitiesOnlyActivateWhenStanding() {
+        return config.getBoolean("Abilities.Activation.Only_Activate_When_Standing", false);
+    }
+
     public boolean getAbilitiesGateEnabled() {
         return config.getBoolean("Abilities.Activation.Level_Gate_Abilities");
     }

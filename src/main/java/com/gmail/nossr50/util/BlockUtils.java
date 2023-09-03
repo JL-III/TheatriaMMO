@@ -59,8 +59,13 @@ public final class BlockUtils {
         if(block.hasMetadata(MetadataConstants.METADATA_KEY_REPLANT)) {
             block.removeMetadata(MetadataConstants.METADATA_KEY_REPLANT, mcMMO.p);
         }
-
         mcMMO.getPlaceStore().setFalse(block);
+    }
+
+    public static void cleanupOnBlockPlace(Block block) {
+        if(block.hasMetadata(MetadataConstants.METADATA_KEY_BONUS_DROPS)) {
+            block.removeMetadata(MetadataConstants.METADATA_KEY_BONUS_DROPS, mcMMO.p);
+        }
     }
 
     /**

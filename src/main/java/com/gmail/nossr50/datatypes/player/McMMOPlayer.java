@@ -963,6 +963,10 @@ public class McMMOPlayer implements Identified {
             return;
         }
 
+        if (mcMMO.p.getGeneralConfig().getAbilitiesOnlyActivateWhenStanding() && player.isSneaking()) {
+            return;
+        }
+
         ItemStack inHand = player.getInventory().getItemInMainHand();
 
         if (mcMMO.getModManager().isCustomTool(inHand) && !mcMMO.getModManager().getTool(inHand).isAbilityEnabled()) {

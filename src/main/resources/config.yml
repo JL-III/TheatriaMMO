@@ -314,7 +314,9 @@ Abilities:
     Enabled: true
     Messages: true
     Activation:
+        #If one is true the other must be false
         Only_Activate_When_Sneaking: false
+        Only_Activate_When_Standing: false
     Cooldowns:
         Berserk: 240
         Blast_Mining: 60

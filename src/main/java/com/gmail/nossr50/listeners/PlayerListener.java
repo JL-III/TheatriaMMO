@@ -21,7 +21,6 @@ import com.gmail.nossr50.skills.repair.RepairManager;
 import com.gmail.nossr50.skills.salvage.Salvage;
 import com.gmail.nossr50.skills.salvage.SalvageManager;
 import com.gmail.nossr50.skills.taming.TamingManager;
-import com.gmail.nossr50.tItanEnchants.ItemInfo;
 import com.gmail.nossr50.util.*;
 import com.gmail.nossr50.util.player.UserManager;
 import com.gmail.nossr50.util.scoreboards.ScoreboardManager;
@@ -31,6 +30,8 @@ import com.gmail.nossr50.util.sounds.SoundManager;
 import com.gmail.nossr50.util.sounds.SoundType;
 import com.gmail.nossr50.worldguard.WorldGuardManager;
 import com.gmail.nossr50.worldguard.WorldGuardUtils;
+import com.playtheatria.jliii.generalutils.items.TitanItem;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -812,11 +813,22 @@ public class PlayerListener implements Listener {
             }
         }
 
-        if (player.getInventory().getItemInMainHand().getType() != Material.AIR && player.getInventory().getItemInMainHand().getItemMeta() != null) {
-            if (ItemInfo.isTitanTool(player.getInventory().getItemInMainHand())) {
+        /*
+         * ATTENTION!
+         * Theatria Patch started
+         * Check to see if
+         * */
+        Response<List<String>> loreListResponse = TitanItem.getLore(player.getInventory().getItemInMainHand());
+        if (loreListResponse.isSuccess()) {
+            if (TitanItem.isTitanTool(loreListResponse.value())) {
                 return;
             }
         }
+
+        /*
+         * Theatria Patch ended
+         *
+         * */
 
         switch (event.getAction()) {
             case RIGHT_CLICK_BLOCK:

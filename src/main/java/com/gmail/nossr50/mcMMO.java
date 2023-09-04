@@ -227,16 +227,14 @@ public class mcMMO extends JavaPlugin {
             //Check for the newer API and tell them what to do if its missing
             checkForOutdatedAPI();
 
-            if(serverAPIOutdated)
-            {
+            if (serverAPIOutdated) {
                 Bukkit
                         .getScheduler()
                         .scheduleSyncRepeatingTask(this,
                                 () -> getLogger().severe("You are running an outdated version of "+platformManager.getServerSoftware()+", mcMMO will not work unless you update to a newer version!"),
                         20, 20*60*30);
 
-                if(platformManager.getServerSoftware() == ServerSoftwareType.CRAFT_BUKKIT)
-                {
+                if (platformManager.getServerSoftware() == ServerSoftwareType.CRAFT_BUKKIT) {
                     Bukkit.getScheduler()
                             .scheduleSyncRepeatingTask(this,
                                     () -> getLogger().severe("We have detected you are using incompatible server software, our best guess is that you are using CraftBukkit. mcMMO requires Spigot or Paper, if you are not using CraftBukkit, you will still need to update your custom server software before mcMMO will work."),
@@ -273,7 +271,7 @@ public class mcMMO extends JavaPlugin {
             //If anonymous statistics are enabled then use them
             Metrics metrics;
 
-            if(generalConfig.getIsMetricsEnabled()) {
+            if (generalConfig.getIsMetricsEnabled()) {
                 metrics = new Metrics(this, 3894);
                 metrics.addCustomChart(new SimplePie("version", () -> getDescription().getVersion()));
 
@@ -345,9 +343,8 @@ public class mcMMO extends JavaPlugin {
     }
 
     @Override
-    public void onLoad()
-    {
-        if(getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+    public void onLoad() {
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             WorldGuardManager.getInstance().registerFlags();
         }
     }
@@ -609,8 +606,7 @@ public class mcMMO extends JavaPlugin {
 
         InteractionManager.initMaps(); //Init maps
 
-        if(CoreSkillsConfig.getInstance().isPrimarySkillEnabled(PrimarySkillType.ACROBATICS))
-        {
+        if (CoreSkillsConfig.getInstance().isPrimarySkillEnabled(PrimarySkillType.ACROBATICS)) {
             LogUtils.debug(mcMMO.p.getLogger(), "Enabling Acrobatics Skills");
 
             //TODO: Should do this differently
@@ -668,8 +664,7 @@ public class mcMMO extends JavaPlugin {
             new ClearRegisteredXPGainTask().runTaskTimer(this, 60, 60);
         }
 
-        if(mcMMO.p.getAdvancedConfig().allowPlayerTips())
-        {
+        if (mcMMO.p.getAdvancedConfig().allowPlayerTips()) {
             new NotifySquelchReminderTask().runTaskTimer(this, 60, ((20 * 60) * 60));
         }
     }

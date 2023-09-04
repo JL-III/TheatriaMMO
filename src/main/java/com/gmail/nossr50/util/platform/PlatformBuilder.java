@@ -28,7 +28,7 @@ public class PlatformBuilder {
     }
 
     public @Nullable Platform build() {
-        switch(serverSoftwareType) {
+        switch (serverSoftwareType) {
 
             case PAPER:
             case SPIGOT:

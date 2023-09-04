@@ -16,9 +16,6 @@ import com.gmail.nossr50.events.experience.McMMOPlayerLevelDownEvent;
 import com.gmail.nossr50.events.experience.McMMOPlayerLevelUpEvent;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 import com.gmail.nossr50.events.fake.*;
-import com.gmail.nossr50.events.hardcore.McMMOPlayerPreDeathPenaltyEvent;
-import com.gmail.nossr50.events.hardcore.McMMOPlayerStatLossEvent;
-import com.gmail.nossr50.events.hardcore.McMMOPlayerVampirismEvent;
 import com.gmail.nossr50.events.party.McMMOPartyLevelUpEvent;
 import com.gmail.nossr50.events.party.McMMOPartyTeleportEvent;
 import com.gmail.nossr50.events.party.McMMOPartyXpGainEvent;
@@ -420,92 +417,6 @@ public final class EventUtils {
         return !isCancelled;
     }
 
-    public static boolean handleStatsLossEvent(Player player, HashMap<String, Integer> levelChanged, HashMap<String, Float> experienceChanged) {
-        if(UserManager.getPlayer(player) == null)
-            return true;
-
-        McMMOPlayerStatLossEvent event = new McMMOPlayerStatLossEvent(player, levelChanged, experienceChanged);
-        mcMMO.p.getServer().getPluginManager().callEvent(event);
-
-        boolean isCancelled = event.isCancelled();
-
-        if (!isCancelled) {
-            levelChanged = event.getLevelChanged();
-            experienceChanged = event.getExperienceChanged();
-            PlayerProfile playerProfile = UserManager.getPlayer(player).getProfile();
-
-            for (PrimarySkillType primarySkillType : SkillTools.NON_CHILD_SKILLS) {
-                String skillName = primarySkillType.toString();
-                int playerSkillLevel = playerProfile.getSkillLevel(primarySkillType);
-                int threshold = mcMMO.p.getGeneralConfig().getHardcoreDeathStatPenaltyLevelThreshold();
-                if(playerSkillLevel > threshold) {
-                    playerProfile.modifySkill(primarySkillType, Math.max(threshold, playerSkillLevel - levelChanged.get(skillName)));
-                    playerProfile.removeXp(primarySkillType, experienceChanged.get(skillName));
-
-                    if (playerProfile.getSkillXpLevel(primarySkillType) < 0) {
-                        playerProfile.setSkillXpLevel(primarySkillType, 0);
-                    }
-
-                    if (playerProfile.getSkillLevel(primarySkillType) < 0) {
-                        playerProfile.modifySkill(primarySkillType, 0);
-                    }
-                }
-            }
-        }
-
-        return !isCancelled;
-    }
-
-    public static boolean handleVampirismEvent(Player killer, Player victim, HashMap<String, Integer> levelChanged, HashMap<String, Float> experienceChanged) {
-        McMMOPlayerVampirismEvent eventKiller = new McMMOPlayerVampirismEvent(killer, false, levelChanged, experienceChanged);
-        McMMOPlayerVampirismEvent eventVictim = new McMMOPlayerVampirismEvent(victim, true, levelChanged, experienceChanged);
-        mcMMO.p.getServer().getPluginManager().callEvent(eventKiller);
-        mcMMO.p.getServer().getPluginManager().callEvent(eventVictim);
-
-        boolean isCancelled = eventKiller.isCancelled() || eventVictim.isCancelled();
-
-        if (!isCancelled) {
-            HashMap<String, Integer> levelChangedKiller = eventKiller.getLevelChanged();
-            HashMap<String, Float> experienceChangedKiller = eventKiller.getExperienceChanged();
-
-            HashMap<String, Integer> levelChangedVictim = eventVictim.getLevelChanged();
-            HashMap<String, Float> experienceChangedVictim = eventVictim.getExperienceChanged();
-
-            McMMOPlayer killerPlayer = UserManager.getPlayer(killer);
-
-            //Not loaded
-            if(killerPlayer == null)
-                return true;
-
-            //Not loaded
-            if(UserManager.getPlayer(victim) == null)
-                return true;
-
-            PlayerProfile victimProfile = UserManager.getPlayer(victim).getProfile();
-
-            for (PrimarySkillType primarySkillType : SkillTools.NON_CHILD_SKILLS) {
-                String skillName = primarySkillType.toString();
-                int victimSkillLevel = victimProfile.getSkillLevel(primarySkillType);
-
-                killerPlayer.addLevels(primarySkillType, levelChangedKiller.get(skillName));
-                killerPlayer.beginUnsharedXpGain(primarySkillType, experienceChangedKiller.get(skillName), XPGainReason.VAMPIRISM, XPGainSource.VAMPIRISM);
-
-                victimProfile.modifySkill(primarySkillType, victimSkillLevel - levelChangedVictim.get(skillName));
-                victimProfile.removeXp(primarySkillType, experienceChangedVictim.get(skillName));
-
-                if (victimProfile.getSkillXpLevel(primarySkillType) < 0) {
-                    victimProfile.setSkillXpLevel(primarySkillType, 0);
-                }
-
-                if (victimProfile.getSkillLevel(primarySkillType) < 0) {
-                    victimProfile.modifySkill(primarySkillType, 0);
-                }
-            }
-        }
-
-        return !isCancelled;
-    }
-
     public static McMMOPlayerAbilityDeactivateEvent callAbilityDeactivateEvent(Player player, SuperAbilityType ability) {
         McMMOPlayerAbilityDeactivateEvent event = new McMMOPlayerAbilityDeactivateEvent(player, mcMMO.p.getSkillTools().getPrimarySkillBySuperAbility(ability));
         mcMMO.p.getServer().getPluginManager().callEvent(event);
@@ -529,13 +440,6 @@ public final class EventUtils {
 
     public static McMMOPlayerRepairCheckEvent callRepairCheckEvent(Player player, short durability, ItemStack repairMaterial, ItemStack repairedObject) {
         McMMOPlayerRepairCheckEvent event = new McMMOPlayerRepairCheckEvent(player, durability, repairMaterial, repairedObject);
-        mcMMO.p.getServer().getPluginManager().callEvent(event);
-
-        return event;
-    }
-
-    public static McMMOPlayerPreDeathPenaltyEvent callPreDeathPenaltyEvent(Player player) {
-        McMMOPlayerPreDeathPenaltyEvent event = new McMMOPlayerPreDeathPenaltyEvent(player);
         mcMMO.p.getServer().getPluginManager().callEvent(event);
 
         return event;

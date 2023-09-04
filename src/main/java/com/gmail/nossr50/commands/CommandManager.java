@@ -3,8 +3,6 @@ package com.gmail.nossr50.commands;
 import co.aikar.commands.BukkitCommandIssuer;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.ConditionFailedException;
-import com.gmail.nossr50.commands.chat.AdminChatCommand;
-import com.gmail.nossr50.commands.chat.PartyChatCommand;
 import com.gmail.nossr50.config.ChatConfig;
 import com.gmail.nossr50.datatypes.chat.ChatChannel;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
@@ -32,25 +30,6 @@ public class CommandManager {
         bukkitCommandManager = new BukkitCommandManager(pluginRef);
 
         registerConditions();
-        registerCommands();
-    }
-
-    private void registerCommands() {
-        registerChatCommands();
-    }
-
-    /**
-     * Registers chat commands if the chat system is enabled
-     */
-    private void registerChatCommands() {
-        if(ChatConfig.getInstance().isChatEnabled()) {
-            if(ChatConfig.getInstance().isChatChannelEnabled(ChatChannel.ADMIN)) {
-                bukkitCommandManager.registerCommand(new AdminChatCommand(pluginRef));
-            }
-            if(ChatConfig.getInstance().isChatChannelEnabled(ChatChannel.PARTY)) {
-                bukkitCommandManager.registerCommand(new PartyChatCommand(pluginRef));
-            }
-        }
     }
 
     public void registerConditions() {

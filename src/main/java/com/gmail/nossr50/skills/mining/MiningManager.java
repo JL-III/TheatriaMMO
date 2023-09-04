@@ -98,7 +98,8 @@ public class MiningManager extends SkillManager {
 
         //TODO: Make this readable
         if (RandomChanceUtil.checkRandomChanceExecutionSuccess(getPlayer(), SubSkillType.MINING_DOUBLE_DROPS, true)) {
-            boolean useTriple = mmoPlayer.getAbilityMode(mcMMO.p.getSkillTools().getSuperAbility(skill)) && mcMMO.p.getAdvancedConfig().getAllowMiningTripleDrops();
+            boolean useTriple = mmoPlayer.getAbilityMode(mcMMO.p.getSkillTools().getSuperAbility(skill))
+                    && mcMMO.p.getAdvancedConfig().getAllowMiningTripleDrops();
             BlockUtils.markDropsAsBonus(blockState, useTriple);
         }
     }
@@ -123,9 +124,7 @@ public class MiningManager extends SkillManager {
 
         tnt.setMetadata(MetadataConstants.METADATA_KEY_TRACKED_TNT, mmoPlayer.getPlayerMetadata());
         tnt.setFuseTicks(0);
-        if (mcMMO.getCompatibilityManager().getMinecraftGameVersion().isAtLeast(1, 16, 4)) {
-            tnt.setSource(player);
-        }
+        tnt.setSource(player);
         targetBlock.setType(Material.AIR);
 
         mmoPlayer.setAbilityDATS(SuperAbilityType.BLAST_MINING, System.currentTimeMillis());

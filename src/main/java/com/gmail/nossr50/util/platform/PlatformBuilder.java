@@ -10,36 +10,9 @@ import org.jetbrains.annotations.Nullable;
  *
  */
 public class PlatformBuilder {
-    private MinecraftGameVersion minecraftGameVersion;
-    private ServerSoftwareType serverSoftwareType;
 
     public PlatformBuilder() {
 
     }
 
-    public PlatformBuilder setMinecraftGameVersion(@NotNull MinecraftGameVersion minecraftGameVersion) {
-        this.minecraftGameVersion = minecraftGameVersion;
-        return this;
-    }
-
-    public PlatformBuilder setSoftwareType(@NotNull ServerSoftwareType softwareType) {
-        this.serverSoftwareType = softwareType;
-        return this;
-    }
-
-    public @Nullable Platform build() {
-        switch (serverSoftwareType) {
-
-            case PAPER:
-            case SPIGOT:
-            case CRAFT_BUKKIT:
-                return createBukkitPlatform();
-            default:
-                return null;
-        }
-    }
-
-    private BukkitPlatform createBukkitPlatform() {
-        return new BukkitPlatform(minecraftGameVersion);
-    }
 }

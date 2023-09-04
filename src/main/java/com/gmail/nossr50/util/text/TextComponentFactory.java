@@ -490,17 +490,17 @@ public class TextComponentFactory {
     public static void getSubSkillTextComponents(Player player, List<Component> textComponents, PrimarySkillType parentSkill) {
         for(SubSkillType subSkillType : SubSkillType.values())
         {
-            if(subSkillType.getParentSkill() == parentSkill)
-            {
+            if (subSkillType.getParentSkill() == parentSkill) {
                 //TODO: Hacky rewrite later
                 //Only some versions of MC have this skill
-                if(subSkillType == SubSkillType.FISHING_MASTER_ANGLER && mcMMO.getCompatibilityManager().getMasterAnglerCompatibilityLayer() == null)
+                if (subSkillType == SubSkillType.FISHING_MASTER_ANGLER) {
                     continue;
+                }
 
-                if(Permissions.isSubSkillEnabled(player, subSkillType))
-                {
-                    if(!InteractionManager.hasSubSkill(subSkillType))
+                if (Permissions.isSubSkillEnabled(player, subSkillType)) {
+                    if (!InteractionManager.hasSubSkill(subSkillType)) {
                         textComponents.add(TextComponentFactory.getSubSkillTextComponent(player, subSkillType));
+                    }
                 }
             }
         }

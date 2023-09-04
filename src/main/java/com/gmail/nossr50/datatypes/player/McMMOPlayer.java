@@ -1,7 +1,6 @@
 package com.gmail.nossr50.datatypes.player;
 
 import com.gmail.nossr50.api.exceptions.InvalidSkillException;
-import com.gmail.nossr50.chat.author.PlayerAuthor;
 import com.gmail.nossr50.config.ChatConfig;
 import com.gmail.nossr50.config.WorldBlacklist;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
@@ -73,9 +72,6 @@ import java.util.UUID;
 public class McMMOPlayer implements Identified {
     private final @NotNull Identity identity;
 
-    //Hacky fix for now, redesign later
-    private final @NotNull PlayerAuthor playerAuthor;
-
     private final Player        player;
     private final PlayerProfile profile;
 
@@ -145,8 +141,6 @@ public class McMMOPlayer implements Identified {
 
         debugMode = false; //Debug mode helps solve support issues, players can toggle it on or off
         attackStrength = 1.0D;
-
-        this.playerAuthor = new PlayerAuthor(player);
 
         this.chatChannel = ChatChannel.NONE;
 
@@ -1186,15 +1180,6 @@ public class McMMOPlayer implements Identified {
     @Override
     public @NonNull Identity identity() {
         return identity;
-    }
-
-
-    /**
-     * The {@link com.gmail.nossr50.chat.author.Author} for this player, used by mcMMO chat
-     * @return the {@link com.gmail.nossr50.chat.author.Author} for this player
-     */
-    public @NotNull PlayerAuthor getPlayerAuthor() {
-        return playerAuthor;
     }
 
     public @NotNull ChatChannel getChatChannel() {

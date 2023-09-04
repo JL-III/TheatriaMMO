@@ -160,59 +160,6 @@ public class PlayerListener implements Listener {
         }.runTaskLater(mcMMO.p, 1);
     }
 
-    /**
-     * Monitor PlayerDeathEvents.
-     * <p>
-     * These events are monitored for the purpose of dealing the penalties
-     * associated with hardcore and vampirism modes. If neither of these
-     * modes are enabled, or if the player who died has hardcore bypass
-     * permissions, this handler does nothing.
-     *
-     * @param event The event to monitor
-     */
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerDeathMonitor(PlayerDeathEvent event) {
-        /* WORLD BLACKLIST CHECK */
-        if(WorldBlacklist.isWorldBlacklisted(event.getEntity().getWorld()))
-            return;
-
-        boolean statLossEnabled = HardcoreManager.isStatLossEnabled();
-        boolean vampirismEnabled = HardcoreManager.isVampirismEnabled();
-
-        if (!statLossEnabled && !vampirismEnabled) {
-            return;
-        }
-
-        Player killedPlayer = event.getEntity();
-
-        if (!killedPlayer.hasMetadata(MetadataConstants.METADATA_KEY_PLAYER_DATA) || Permissions.hardcoreBypass(killedPlayer)) {
-            return;
-        }
-
-        Player killer = killedPlayer.getKiller();
-
-        /* WORLD GUARD MAIN FLAG CHECK */
-        if(WorldGuardUtils.isWorldGuardLoaded())
-        {
-            if(!WorldGuardManager.getInstance().hasMainFlag(killedPlayer))
-                return;
-        }
-
-        if (statLossEnabled || (killer != null && vampirismEnabled)) {
-            if (EventUtils.callPreDeathPenaltyEvent(killedPlayer).isCancelled()) {
-                return;
-            }
-
-            if (killer != null && vampirismEnabled) {
-                HardcoreManager.invokeVampirism(killer, killedPlayer);
-            }
-
-            if (statLossEnabled) {
-                HardcoreManager.invokeStatPenalty(killedPlayer);
-            }
-        }
-    }
-
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = false)
     public void onPlayerDeathNormal(PlayerDeathEvent playerDeathEvent) {
         SkillUtils.removeAbilityBoostsFromInventory(playerDeathEvent.getEntity());
@@ -857,7 +804,6 @@ public class PlayerListener implements Listener {
                         mcMMOPlayer.processAbilityActivation(PrimarySkillType.WOODCUTTING);
                     }
 
-                    ChimaeraWing.activationCheck(player);
                 }
 
                 HerbalismManager herbalismManager = mcMMOPlayer.getHerbalismManager();
@@ -922,8 +868,6 @@ public class PlayerListener implements Listener {
                     mcMMOPlayer.processAbilityActivation(PrimarySkillType.WOODCUTTING);
                 }
 
-                /* ITEM CHECKS */
-                ChimaeraWing.activationCheck(player);
 
                 /* BLAST MINING CHECK */
                 MiningManager miningManager = mcMMOPlayer.getMiningManager();
@@ -982,18 +926,6 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if(plugin.getChatManager().isChatChannelEnabled(mcMMOPlayer.getChatChannel())) {
-            if(mcMMOPlayer.getChatChannel() != ChatChannel.NONE) {
-                if(plugin.getChatManager().isMessageAllowed(mcMMOPlayer)) {
-                    //If the message is allowed we cancel this event to avoid double sending messages
-                    plugin.getChatManager().processPlayerMessage(mcMMOPlayer, event.getMessage(), event.isAsynchronous());
-                    event.setCancelled(true);
-                } else {
-                    //Message wasn't allowed, remove the player from their channel
-                    plugin.getChatManager().setOrToggleChatChannel(mcMMOPlayer, mcMMOPlayer.getChatChannel());
-                }
-            }
-        }
     }
 
     /**

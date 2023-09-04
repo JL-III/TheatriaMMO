@@ -1,6 +1,5 @@
 package com.gmail.nossr50;
 
-import com.gmail.nossr50.chat.ChatManager;
 import com.gmail.nossr50.commands.CommandManager;
 import com.gmail.nossr50.config.*;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
@@ -44,7 +43,6 @@ import com.gmail.nossr50.util.commands.CommandRegistrationManager;
 import com.gmail.nossr50.util.compat.CompatibilityManager;
 import com.gmail.nossr50.util.experience.FormulaManager;
 import com.gmail.nossr50.util.platform.PlatformManager;
-import com.gmail.nossr50.util.platform.ServerSoftwareType;
 import com.gmail.nossr50.util.player.PlayerLevelUtils;
 import com.gmail.nossr50.util.player.UserManager;
 import com.gmail.nossr50.util.scoreboards.ScoreboardManager;
@@ -92,7 +90,6 @@ public class mcMMO extends JavaPlugin {
     private static PlayerLevelUtils playerLevelUtils;
     private static SmeltingTracker smeltingTracker;
     private static TransientMetadataTools transientMetadataTools;
-    private static ChatManager chatManager;
     private static CommandManager commandManager; //ACF
     private static TransientEntityTracker transientEntityTracker;
 
@@ -224,49 +221,30 @@ public class mcMMO extends JavaPlugin {
 
             databaseManager = DatabaseManagerFactory.getDatabaseManager(mcMMO.getUsersFilePath(), getLogger(), purgeTime, mcMMO.p.getAdvancedConfig().getStartingLevel());
 
-            //Check for the newer API and tell them what to do if its missing
-            checkForOutdatedAPI();
+            registerEvents();
+            registerCoreSkills();
 
-            if (serverAPIOutdated) {
-                Bukkit
-                        .getScheduler()
-                        .scheduleSyncRepeatingTask(this,
-                                () -> getLogger().severe("You are running an outdated version of "+platformManager.getServerSoftware()+", mcMMO will not work unless you update to a newer version!"),
-                        20, 20*60*30);
+            PartyManager.loadParties();
 
-                if (platformManager.getServerSoftware() == ServerSoftwareType.CRAFT_BUKKIT) {
-                    Bukkit.getScheduler()
-                            .scheduleSyncRepeatingTask(this,
-                                    () -> getLogger().severe("We have detected you are using incompatible server software, our best guess is that you are using CraftBukkit. mcMMO requires Spigot or Paper, if you are not using CraftBukkit, you will still need to update your custom server software before mcMMO will work."),
-                    20, 20*60*30);
-                }
-            } else {
-                registerEvents();
-                registerCoreSkills();
-                registerCustomRecipes();
+            formulaManager = new FormulaManager();
 
-                PartyManager.loadParties();
-
-                formulaManager = new FormulaManager();
-
-                for (Player player : getServer().getOnlinePlayers()) {
-                    new PlayerProfileLoadingTask(player).runTaskLaterAsynchronously(mcMMO.p, 1); // 1 Tick delay to ensure the player is marked as online before we begin loading
-                }
-
-                LogUtils.debug(mcMMO.p.getLogger(), "Version " + getDescription().getVersion() + " is enabled!");
-
-                scheduleTasks();
-                CommandRegistrationManager.registerCommands();
-
-                placeStore = ChunkManagerFactory.getChunkManager(); // Get our ChunkletManager
-
-                if (generalConfig.getPTPCommandWorldPermissions()) {
-                    Permissions.generateWorldTeleportPermissions();
-                }
-
-                //Populate Ranked Skill Maps (DO THIS LAST)
-                RankUtils.populateRanks();
+            for (Player player : getServer().getOnlinePlayers()) {
+                new PlayerProfileLoadingTask(player).runTaskLaterAsynchronously(mcMMO.p, 1); // 1 Tick delay to ensure the player is marked as online before we begin loading
             }
+
+            LogUtils.debug(mcMMO.p.getLogger(), "Version " + getDescription().getVersion() + " is enabled!");
+
+            scheduleTasks();
+            CommandRegistrationManager.registerCommands();
+
+            placeStore = ChunkManagerFactory.getChunkManager(); // Get our ChunkletManager
+
+            if (generalConfig.getPTPCommandWorldPermissions()) {
+                Permissions.generateWorldTeleportPermissions();
+            }
+
+            //Populate Ranked Skill Maps (DO THIS LAST)
+            RankUtils.populateRanks();
 
             //If anonymous statistics are enabled then use them
             Metrics metrics;
@@ -310,8 +288,6 @@ public class mcMMO extends JavaPlugin {
 
         transientMetadataTools = new TransientMetadataTools(this);
 
-        chatManager = new ChatManager(this);
-
         commandManager = new CommandManager(this);
 
         transientEntityTracker = new TransientEntityTracker();
@@ -328,18 +304,6 @@ public class mcMMO extends JavaPlugin {
 
     public static MaterialMapStore getMaterialMapStore() {
         return materialMapStore;
-    }
-
-    private void checkForOutdatedAPI() {
-        try {
-            Class<?> checkForClass = Class.forName("org.bukkit.event.block.BlockDropItemEvent");
-            checkForClass.getMethod("getItems");
-            Class.forName("net.md_5.bungee.api.chat.BaseComponent");
-        } catch (ClassNotFoundException | NoSuchMethodException e) {
-            serverAPIOutdated = true;
-            String software = platformManager.getServerSoftwareStr();
-            getLogger().severe("You are running an older version of " + software + " that is not compatible with mcMMO, update your server software!");
-        }
     }
 
     @Override
@@ -616,14 +580,6 @@ public class mcMMO extends JavaPlugin {
         }
     }
 
-    private void registerCustomRecipes() {
-        getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-            if (generalConfig.getChimaeraEnabled()) {
-                getServer().addRecipe(ChimaeraWing.getChimaeraWingRecipe());
-            }
-        }, 40);
-    }
-
     private void scheduleTasks() {
         // Periodic save timer (Saves every 10 minutes by default)
         long second = 20;
@@ -710,10 +666,6 @@ public class mcMMO extends JavaPlugin {
         return worldBlacklist;
     }
 
-    public static PlatformManager getPlatformManager() {
-        return platformManager;
-    }
-
     public static SmeltingTracker getSmeltingTracker() {
         return smeltingTracker;
     }
@@ -728,10 +680,6 @@ public class mcMMO extends JavaPlugin {
 
     public static TransientMetadataTools getTransientMetadataTools() {
         return transientMetadataTools;
-    }
-
-    public ChatManager getChatManager() {
-        return chatManager;
     }
 
     public CommandManager getCommandManager() {

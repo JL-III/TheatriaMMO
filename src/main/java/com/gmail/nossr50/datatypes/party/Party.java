@@ -1,6 +1,5 @@
 package com.gmail.nossr50.datatypes.party;
 
-import com.gmail.nossr50.chat.SamePartyPredicate;
 import com.gmail.nossr50.config.experience.ExperienceConfig;
 import com.gmail.nossr50.datatypes.experience.FormulaType;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
@@ -26,7 +25,6 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class Party {
-    private final @NotNull Predicate<CommandSender> samePartyPredicate;
     private final LinkedHashMap<UUID, String> members = new LinkedHashMap<>();
     private final List<Player> onlineMembers = new ArrayList<>();
 
@@ -49,7 +47,6 @@ public class Party {
 
     public Party(String name) {
         this.name = name;
-        samePartyPredicate = new SamePartyPredicate<>(this);
     }
 
     public Party(PartyLeader leader, String name) {
@@ -57,7 +54,6 @@ public class Party {
         this.name = name;
         this.locked = true;
         this.level = 0;
-        samePartyPredicate = new SamePartyPredicate<>(this);
     }
 
     public Party(PartyLeader leader, String name, String password) {
@@ -66,7 +62,6 @@ public class Party {
         this.password = password;
         this.locked = true;
         this.level = 0;
-        samePartyPredicate = new SamePartyPredicate<>(this);
     }
 
     public Party(PartyLeader leader, String name, String password, boolean locked) {
@@ -75,7 +70,6 @@ public class Party {
         this.password = password;
         this.locked = locked;
         this.level = 0;
-        samePartyPredicate = new SamePartyPredicate<>(this);
     }
 
     public LinkedHashMap<UUID, String> getMembers() {
@@ -414,7 +408,4 @@ public class Party {
         return this.getName().equals(other.getName());
     }
 
-    public @NotNull Predicate<CommandSender> getSamePartyPredicate() {
-        return samePartyPredicate;
-    }
 }

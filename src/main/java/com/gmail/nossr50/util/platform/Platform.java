@@ -12,21 +12,10 @@ import org.jetbrains.annotations.NotNull;
 public interface Platform {
 
     /**
-     * Target {@link ServerSoftwareType} for this {@link Platform}
-     * @return the {@link ServerSoftwareType} for this {@link Platform}
-     */
-    @NotNull ServerSoftwareType getServerSoftwareType();
-
-    /**
      * Get the {@link CompatibilityManager} for this {@link Platform}
      * @return the {@link CompatibilityManager} for this platform
      */
     @NotNull CompatibilityManager getCompatibilityManager();
 
-    /**
-     * The target game version of this {@link Platform}
-     * @return the target {@link MinecraftGameVersion} of this {@link Platform}
-     */
-    @NotNull MinecraftGameVersion getGameVersion();
 
 }

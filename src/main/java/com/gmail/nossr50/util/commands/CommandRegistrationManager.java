@@ -1,10 +1,8 @@
 package com.gmail.nossr50.util.commands;
 
 import com.gmail.nossr50.commands.*;
-import com.gmail.nossr50.commands.admin.CompatibilityCommand;
 import com.gmail.nossr50.commands.admin.McmmoReloadLocaleCommand;
 import com.gmail.nossr50.commands.admin.PlayerDebugCommand;
-import com.gmail.nossr50.commands.chat.McChatSpy;
 import com.gmail.nossr50.commands.database.McpurgeCommand;
 import com.gmail.nossr50.commands.database.McremoveCommand;
 import com.gmail.nossr50.commands.database.MmoshowdbCommand;
@@ -164,15 +162,6 @@ public final class CommandRegistrationManager {
         command.setPermissionMessage(permissionsMessage);
         command.setUsage(LocaleLoader.getString("Commands.Usage.0", "mmodebug"));
         command.setExecutor(new PlayerDebugCommand());
-    }
-
-    private static void registerMcChatSpyCommand() {
-        PluginCommand command = mcMMO.p.getCommand("mcchatspy");
-        command.setDescription(LocaleLoader.getString("Commands.Description.mcchatspy"));
-        command.setPermission("mcmmo.commands.mcchatspy;mcmmo.commands.mcchatspy.others");
-        command.setPermissionMessage(permissionsMessage);
-        command.setUsage(LocaleLoader.getString("Commands.Usage.1", "mcchatspy", "[" + LocaleLoader.getString("Commands.Usage.Player") + "]"));
-        command.setExecutor(new McChatSpy());
     }
 
     private static void registerMcrefreshCommand() {
@@ -417,13 +406,6 @@ public final class CommandRegistrationManager {
         command.setExecutor(new McmmoReloadLocaleCommand());
     }
 
-    private static void registerCompatibilityCommand() {
-        PluginCommand command = mcMMO.p.getCommand("mmocompat"); //TODO: Localize
-        command.setDescription(LocaleLoader.getString("Commands.Description.mmocompat"));
-        command.setUsage(LocaleLoader.getString("Commands.Usage.0", "mmocompat"));
-        command.setExecutor(new CompatibilityCommand());
-    }
-
     private static void registerXPBarCommand() {
         PluginCommand command = mcMMO.p.getCommand("mmoxpbar"); //TODO: Localize
         command.setDescription(LocaleLoader.getString("Commands.Description.mmoxpbar"));
@@ -440,7 +422,6 @@ public final class CommandRegistrationManager {
         registerMcImportCommand();
         registerMcabilityCommand();
         registerMcgodCommand();
-        registerMcChatSpyCommand();
         registerMcmmoCommand();
         registerMcnotifyCommand();
         registerMcrefreshCommand();
@@ -480,7 +461,5 @@ public final class CommandRegistrationManager {
         // Admin commands
         registerReloadLocaleCommand();
 
-        // Misc
-        registerCompatibilityCommand();
     }
 }

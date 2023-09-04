@@ -102,7 +102,7 @@ public class FishingCommand extends SkillCommand {
         canMagicHunt = canUseSubskill(player, SubSkillType.FISHING_MAGIC_HUNTER) && canUseSubskill(player, SubSkillType.FISHING_TREASURE_HUNTER);
         canShake = canUseSubskill(player, SubSkillType.FISHING_SHAKE);
         canFishermansDiet = canUseSubskill(player, SubSkillType.FISHING_FISHERMANS_DIET);
-        canMasterAngler = mcMMO.getCompatibilityManager().getMasterAnglerCompatibilityLayer() != null && canUseSubskill(player, SubSkillType.FISHING_MASTER_ANGLER);
+        canMasterAngler = canUseSubskill(player, SubSkillType.FISHING_MASTER_ANGLER);
         canIceFish = canUseSubskill(player, SubSkillType.FISHING_ICE_FISHING);
     }
 

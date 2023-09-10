@@ -71,32 +71,23 @@ import java.util.UUID;
 
 public class McMMOPlayer implements Identified {
     private final @NotNull Identity identity;
-
-    private final Player        player;
+    private final Player player;
     private final PlayerProfile profile;
-
     private final Map<PrimarySkillType, SkillManager> skillManagers = new EnumMap<>(PrimarySkillType.class);
     private final ExperienceBarManager experienceBarManager;
-
     private Party   party;
     private Party   invite;
     private Party   allianceInvite;
     private int     itemShareModifier;
-
     private PartyTeleportRecord ptpRecord;
-
     private boolean displaySkillNotifications = true;
     private boolean debugMode;
-
     private boolean abilityUse = true;
     private boolean godMode;
     private boolean chatSpy = false; //Off by default
-
     private ChatChannel chatChannel;
-
     private final Map<SuperAbilityType, Boolean> abilityMode     = new EnumMap<>(SuperAbilityType.class);
     private final Map<SuperAbilityType, Boolean> abilityInformed = new EnumMap<>(SuperAbilityType.class);
-
     private final Map<ToolType, Boolean> toolMode = new EnumMap<>(ToolType.class);
 
     private int recentlyHurt;
@@ -106,11 +97,9 @@ public class McMMOPlayer implements Identified {
     private double attackStrength; //captured during arm swing events
     //private int chimeraWingLastUse;
     private Location teleportCommence;
-
     private boolean isUsingUnarmed;
     private final FixedMetadataValue playerMetadata;
     private final String playerName;
-
     private PrimarySkillType lastSkillShownScoreboard = PrimarySkillType.values()[0];
 
     public McMMOPlayer(Player player, PlayerProfile profile) {

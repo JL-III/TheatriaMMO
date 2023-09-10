@@ -905,9 +905,13 @@ public class PlayerListener implements Listener {
                     }
                 }
                 break;
-
+            /*
+            * If Player is not holding air in their off hand, and player is not inside a vehicle and is not sneaking break out of switch.
+            * */
             case RIGHT_CLICK_AIR:
-                if(player.getInventory().getItemInOffHand().getType() != Material.AIR && !player.isInsideVehicle() && !player.isSneaking()) {
+                if (player.getInventory().getItemInOffHand().getType() != Material.AIR
+                        && !player.isInsideVehicle()
+                        && !player.isSneaking()) {
                     break;
                 }
 

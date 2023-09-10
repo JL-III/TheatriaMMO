@@ -52,6 +52,8 @@ import com.gmail.nossr50.util.skills.SkillTools;
 import com.gmail.nossr50.util.skills.SkillUtils;
 import com.gmail.nossr50.util.sounds.SoundManager;
 import com.gmail.nossr50.util.sounds.SoundType;
+import com.playtheatria.jliii.generalutils.items.TitanItem;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import net.kyori.adventure.identity.Identified;
 import net.kyori.adventure.identity.Identity;
 import org.bukkit.Bukkit;
@@ -65,10 +67,7 @@ import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class McMMOPlayer implements Identified {
     private final @NotNull Identity identity;
@@ -882,12 +881,27 @@ public class McMMOPlayer implements Identified {
             return;
         }
 
+        /*
+         * ATTENTION!
+         * Theatria Patch started
+         * Check to see if
+         * */
+        Response<List<String>> loreListResponse = TitanItem.getLore(player.getInventory().getItemInMainHand());
+        if (loreListResponse.isSuccess()) {
+            if (TitanItem.isTitanTool(loreListResponse.value())) {
+                return;
+            }
+        }
+
+        /*
+         * Theatria Patch ended
+         *
+         * */
+
         //TODO: This is hacky and temporary solution until skills are move to the new system
         //Potential problems with this include skills with two super abilities (ie mining)
-        if(!RankUtils.hasUnlockedSubskill(player, subSkillType))
-        {
+        if (!RankUtils.hasUnlockedSubskill(player, subSkillType)) {
             int diff = RankUtils.getSuperAbilityUnlockRequirement(superAbilityType) - getSkillLevel(primarySkillType);
-
             //Inform the player they are not yet skilled enough
             NotificationManager.sendPlayerInformation(player, NotificationType.ABILITY_COOLDOWN, "Skills.AbilityGateRequirementFail", String.valueOf(diff), mcMMO.p.getSkillTools().getLocalizedSkillName(primarySkillType));
             return;

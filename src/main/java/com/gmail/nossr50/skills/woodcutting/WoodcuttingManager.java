@@ -19,8 +19,8 @@ import com.gmail.nossr50.util.skills.CombatUtils;
 import com.gmail.nossr50.util.skills.RankUtils;
 import com.gmail.nossr50.util.skills.SkillActivationType;
 import com.gmail.nossr50.util.skills.SkillUtils;
-import com.nessxxiii.titanenchants.items.TitanItem;
-import com.nessxxiii.titanenchants.util.Response;
+import com.nessxxiii.titantools.items.ItemInfo;
+import com.nessxxiii.titantools.util.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -74,9 +74,9 @@ public class WoodcuttingManager extends SkillManager {
 
     public boolean canUseTreeFeller(ItemStack heldItem) {
         //Fetch lore list response if there is lore check if it's a titan tool, if so, return false
-        Response<List<String>> loreListResponse = TitanItem.getLore(heldItem);
+        Response<List<String>> loreListResponse = ItemInfo.getLore(heldItem);
         if (loreListResponse.isSuccess()) {
-            if (TitanItem.isTitanTool(loreListResponse.value())) {
+            if (ItemInfo.isTitanTool(loreListResponse.value())) {
                 Bukkit.getConsoleSender().sendMessage("Titan Item Detected, returning false");
                 return false;
             }

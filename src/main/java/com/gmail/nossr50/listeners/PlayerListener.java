@@ -30,8 +30,8 @@ import com.gmail.nossr50.util.sounds.SoundManager;
 import com.gmail.nossr50.util.sounds.SoundType;
 import com.gmail.nossr50.worldguard.WorldGuardManager;
 import com.gmail.nossr50.worldguard.WorldGuardUtils;
-import com.nessxxiii.titanenchants.items.TitanItem;
-import com.nessxxiii.titanenchants.util.Response;
+import com.nessxxiii.titantools.items.ItemInfo;
+import com.nessxxiii.titantools.util.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -818,9 +818,9 @@ public class PlayerListener implements Listener {
          * Theatria Patch started
          * Check to see if
          * */
-        Response<List<String>> loreListResponse = TitanItem.getLore(player.getInventory().getItemInMainHand());
+        Response<List<String>> loreListResponse = ItemInfo.getLore(player.getInventory().getItemInMainHand());
         if (loreListResponse.isSuccess()) {
-            if (TitanItem.isTitanTool(loreListResponse.value())) {
+            if (ItemInfo.isTitanTool(loreListResponse.value())) {
                 return;
             }
         }

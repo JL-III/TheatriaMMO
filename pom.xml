@@ -373,8 +373,8 @@
 <!--        Theatria Patch   -->
         <dependency>
             <groupId>com.github.JL-III</groupId>
-            <artifactId>TitanEnchants</artifactId>
-            <version>2.0.0-alpha-10</version>
+            <artifactId>TitanTools</artifactId>
+            <version>2.0.0-alpha-14</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

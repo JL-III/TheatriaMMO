@@ -52,8 +52,8 @@ import com.gmail.nossr50.util.skills.SkillTools;
 import com.gmail.nossr50.util.skills.SkillUtils;
 import com.gmail.nossr50.util.sounds.SoundManager;
 import com.gmail.nossr50.util.sounds.SoundType;
-import com.nessxxiii.titanenchants.items.TitanItem;
-import com.nessxxiii.titanenchants.util.Response;
+import com.nessxxiii.titantools.items.ItemInfo;
+import com.nessxxiii.titantools.util.Response;
 import net.kyori.adventure.identity.Identified;
 import net.kyori.adventure.identity.Identity;
 import org.bukkit.Bukkit;
@@ -886,9 +886,9 @@ public class McMMOPlayer implements Identified {
          * Theatria Patch started
          * Check to see if
          * */
-        Response<List<String>> loreListResponse = TitanItem.getLore(player.getInventory().getItemInMainHand());
+        Response<List<String>> loreListResponse = ItemInfo.getLore(player.getInventory().getItemInMainHand());
         if (loreListResponse.isSuccess()) {
-            if (TitanItem.isTitanTool(loreListResponse.value())) {
+            if (ItemInfo.isTitanTool(loreListResponse.value())) {
                 return;
             }
         }

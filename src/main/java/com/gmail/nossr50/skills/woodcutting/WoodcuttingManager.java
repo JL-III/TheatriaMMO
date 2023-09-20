@@ -77,7 +77,7 @@ public class WoodcuttingManager extends SkillManager {
         Response<List<String>> loreListResponse = ItemInfo.getLore(heldItem);
         if (loreListResponse.isSuccess()) {
             if (ItemInfo.isTitanTool(loreListResponse.value())) {
-                Bukkit.getConsoleSender().sendMessage("Titan Item Detected, returning false");
+//                Bukkit.getConsoleSender().sendMessage("Titan Item Detected, returning false");
                 return false;
             }
         }

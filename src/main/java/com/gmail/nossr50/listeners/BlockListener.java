@@ -241,8 +241,6 @@ public class BlockListener implements Listener {
         if (event.getBlock().getMetadata(MetadataConstants.METADATA_KEY_BONUS_DROPS).size() > 0) {
             BlockUtils.cleanupOnBlockPlace(event.getBlock());
             Bukkit.getLogger().warning("mcmmo " + "removed bonus drop metadata");
-        } else {
-            Bukkit.getLogger().info("No bonus drops metadata present");
         }
         /* WORLD BLACKLIST CHECK */
         if(WorldBlacklist.isWorldBlacklisted(block.getWorld())) {

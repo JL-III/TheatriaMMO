@@ -374,13 +374,14 @@
         <dependency>
             <groupId>com.github.JL-III</groupId>
             <artifactId>TitanTools</artifactId>
-            <version>v2.0.1-alpha.20</version>
+            <version>v2.0.1-alpha.21</version>
         </dependency>
         <dependency>
             <groupId>com.github.JL-III</groupId>
             <artifactId>GeneralUtils</artifactId>
             <version>v1.0.4-alpha.3</version>
         </dependency>
+<!--        Theatria Patch   -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>

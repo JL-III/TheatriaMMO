@@ -31,7 +31,7 @@ import com.gmail.nossr50.util.sounds.SoundType;
 import com.gmail.nossr50.worldguard.WorldGuardManager;
 import com.gmail.nossr50.worldguard.WorldGuardUtils;
 import com.nessxxiii.titantools.itemmanagement.ItemInfo;
-import com.nessxxiii.titantools.generalutils.Response;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;

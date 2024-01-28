@@ -53,7 +53,7 @@ import com.gmail.nossr50.util.skills.SkillUtils;
 import com.gmail.nossr50.util.sounds.SoundManager;
 import com.gmail.nossr50.util.sounds.SoundType;
 import com.nessxxiii.titantools.itemmanagement.ItemInfo;
-import com.nessxxiii.titantools.generalutils.Response;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import net.kyori.adventure.identity.Identified;
 import net.kyori.adventure.identity.Identity;
 import org.bukkit.Bukkit;

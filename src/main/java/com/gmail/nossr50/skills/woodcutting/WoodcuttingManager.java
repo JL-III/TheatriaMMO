@@ -20,7 +20,7 @@ import com.gmail.nossr50.util.skills.RankUtils;
 import com.gmail.nossr50.util.skills.SkillActivationType;
 import com.gmail.nossr50.util.skills.SkillUtils;
 import com.nessxxiii.titantools.itemmanagement.ItemInfo;
-import com.nessxxiii.titantools.generalutils.Response;
+import com.playtheatria.jliii.generalutils.utils.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

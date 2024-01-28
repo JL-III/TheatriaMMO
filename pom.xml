@@ -3,7 +3,7 @@
 
     <groupId>com.gmail.nossr50.mcMMO</groupId>
     <artifactId>TheatriaMMO</artifactId>
-    <version>v2.2.0-alpha.2</version>
+    <version>v2.2.0-alpha.3</version>
     <name>TheatriaMMO</name>
     <url>https://github.com/JL-III/TheatriaMMO</url>
 
@@ -376,7 +376,7 @@
         <dependency>
             <groupId>com.github.JL-III</groupId>
             <artifactId>TitanTools</artifactId>
-            <version>v2.0.1-alpha.21</version>
+            <version>v2.0.1-alpha.22</version>
         </dependency>
         <dependency>
             <groupId>com.github.JL-III</groupId>

@@ -1,10 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.gmail.nossr50.mcMMO</groupId>
     <artifactId>TheatriaMMO</artifactId>
-    <version>v2.2.0-alpha.1</version>
+    <version>v2.2.0-alpha.2</version>
     <name>TheatriaMMO</name>
     <url>https://github.com/JL-III/TheatriaMMO</url>
+
     <scm>
         <url>https://github.com/JL-III/TheatriaMMO</url>
         <connection>scm:git:git://github.com/JL-III/TheatriaMMO.git</connection>
